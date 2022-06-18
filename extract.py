@@ -38,10 +38,15 @@ for filename in os.listdir('block_models'):
     fin.close()
 
     blockName = filename[:-len(".json")]
+    if "structure_block" in blockName:
+        continue
     if blockName.endswith("_inventory"):
         blockName = blockName[:-len("_inventory")]
+    if blockName.endswith("_on"):
+        blockName = blockName[:-len("_on")]
     if blockName in substitutions:
         blockName = substitutions[blockName]
+    
 
     if 'parent' in model_data and model_data['parent'] == "minecraft:block/cube_all":
         avgColor = getAverageColor(model_data['textures']['all'])
