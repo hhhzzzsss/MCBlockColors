@@ -9,6 +9,17 @@ import os
 
 output_name = "blockColors.json"
 
+substitutions = {
+    "copper_block": "waxed_copper_block",
+    "exposed_copper": "waxed_exposed_copper",
+    "weathered_copper": "waxed_weathered_copper",
+    "oxidized_copper": "waxed_oxidized_copper",
+    "cut_copper": "waxed_cut_copper",
+    "exposed_cut_copper": "waxed_exposed_cut_copper",
+    "weathered_cut_copper": "waxed_weathered_cut_copper",
+    "oxidized_cut_copper": "waxed_oxidized_cut_copper",
+}
+
 def getAverageColor(path):
     if path.startswith("minecraft:block/"):
         path = path[len("minecraft:block/"):]
@@ -27,8 +38,10 @@ for filename in os.listdir('block_models'):
     fin.close()
 
     blockName = filename[:-len(".json")]
-    if (blockName.endswith("_inventory")):
+    if blockName.endswith("_inventory"):
         blockName = blockName[:-len("_inventory")]
+    if blockName in substitutions:
+        blockName = substitutions[blockName]
 
     if 'parent' in model_data and model_data['parent'] == "minecraft:block/cube_all":
         avgColor = getAverageColor(model_data['textures']['all'])
